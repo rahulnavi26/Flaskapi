@@ -25,19 +25,20 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                echo 'Running unit tests with pytest...'
-                // Run pytest, outputting junit XML and test coverage reports
-                sh './venv/bin/pytest --cov=app --cov-report=xml --cov-report=term --junitxml=test-results.xml tests/'
-            }
-            post {
-                always {
-                    // Archive test results in Jenkins
-                    junit 'test-results.xml'
-                }
-            }
+      stage('Run Tests') {
+    steps {
+        echo 'Running unit tests with pytest...'
+        sh '''
+        export PYTHONPATH=$WORKSPACE
+        ./venv/bin/pytest --cov=app --cov-report=xml --cov-report=term --junitxml=test-results.xml tests/
+        '''
+    }
+    post {
+        always {
+            junit 'test-results.xml'
         }
+    }
+}
 
         stage('Docker Build & Tag') {
             steps {
