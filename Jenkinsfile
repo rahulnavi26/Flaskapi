@@ -1,7 +1,6 @@
 pipeline {
 agent any
 
-```
 environment {
     IMAGE_NAME = 'flask-api-demo'
     IMAGE_TAG = "build-${BUILD_NUMBER}"
@@ -75,6 +74,6 @@ post {
         echo "CI/CD Pipeline failed. Check build logs for details."
     }
 }
-```
+
 
 }
